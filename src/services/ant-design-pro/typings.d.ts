@@ -41,7 +41,7 @@ declare namespace API {
     avatar?: string;
     name?: string;
     owner?: string;
-    desc?: string;
+    description?: string;
     callNo?: number;
     status?: number;
     updatedAt?: string;
@@ -62,7 +62,7 @@ declare namespace API {
   };
 
   type LoginParams = {
-    username?: string;
+    userName?: string;
     password?: string;
     autoLogin?: boolean;
     type?: string;

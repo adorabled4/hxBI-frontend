@@ -1,6 +1,4 @@
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -16,11 +14,12 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
+import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
-import Settings from '../../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
+import Settings from '../../../../config/defaultSettings';
+import {loginUsingPOST} from "@/services/bi/userController";
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -84,7 +83,7 @@ const LoginMessage: React.FC<{
 };
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [userLoginState, setUserLoginState] = useState<API.BaseResponse>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
@@ -95,7 +94,9 @@ const Login: React.FC = () => {
       height: '100vh',
       overflow: 'auto',
       backgroundImage:
-        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+      "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+      // 页面背景
+      //   "url('https://cdn.pixabay.com/photo/2016/04/12/22/35/watercolour-1325656_960_720.jpg')",
       backgroundSize: '100% 100%',
     };
   });
@@ -114,15 +115,19 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (values: API.LoginParams) => {
+  const handleSubmit = async (values: API.LoginParam) => {
     try {
       // 登录
-      const msg = await login({ ...values, type });
-      if (msg.status === 'ok') {
+      const msg = await loginUsingPOST({ ...values });
+      console.log( "msg : " +msg);
+      if (msg.code === 200) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
           defaultMessage: '登录成功！',
         });
+        // 保存token到localStorage
+        let token = msg.data ?? '';
+        localStorage.setItem('accessToken', token);
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
@@ -137,12 +142,51 @@ const Login: React.FC = () => {
         id: 'pages.login.failure',
         defaultMessage: '登录失败，请重试！',
       });
-      console.log(error);
-      message.error(defaultLoginFailureMessage);
+      // message.error(defaultLoginFailureMessage);
     }
   };
   const { status, type: loginType } = userLoginState;
 
+
+  const logo = (
+    <div style={{ display: 'flex', alignItems: 'left' }}>
+      <img
+        src="/logo.svg"
+        alt="logo"
+        style={{ width: '120px', height: '60px', marginRight: '20px' }}
+      />
+    </div>
+  );
+  const title = (
+    <span
+      style={{
+        fontSize: '24px',
+        fontWeight: 'bold',
+        marginLeft: '20px',
+        background: '-webkit-linear-gradient(left, #FF00FF, #8A2BE2)', // 设置渐变
+        WebkitBackgroundClip: 'text', // 设置文本填充为渐变色
+        WebkitTextFillColor: 'transparent', // 设置字体颜色为透明，以显示渐变背景色
+      }}
+    >
+      登录
+      <br />
+    </span>
+  );
+  const subTitle = (
+    <span
+      style={{
+        fontSize: '14px',
+        fontWeight: 'bold',
+        marginBottom: '-50px',
+        marginTop: '40px',
+        background: '-webkit-linear-gradient(left,#6FFF8B, #4169E1 )', // 设置渐变
+        WebkitBackgroundClip: 'text', // 设置文本填充为渐变色
+        WebkitTextFillColor: 'transparent', // 设置字体颜色为透明，以显示渐变背景色
+      }}
+    >
+      AI Business Intelligence
+    </span>
+  );
   return (
     <div className={containerClassName}>
       <Helmet>
@@ -162,13 +206,14 @@ const Login: React.FC = () => {
         }}
       >
         <LoginForm
+          style={{ margin: -14 }}
           contentStyle={{
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
+          logo={logo}
+          title={title}
+          subTitle={subTitle}
           initialValues={{
             autoLogin: true,
           }}
@@ -181,7 +226,7 @@ const Login: React.FC = () => {
             <ActionIcons key="icons" />,
           ]}
           onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParams);
+            await handleSubmit(values as API.LoginParam);
           }}
         >
           <Tabs
@@ -217,7 +262,7 @@ const Login: React.FC = () => {
           {type === 'account' && (
             <>
               <ProFormText
-                name="username"
+                name="userAccount"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
@@ -363,7 +408,7 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      <Footer backgroundColor={"rgba(0, 0, 0, 0)"}/>
     </div>
   );
 };
