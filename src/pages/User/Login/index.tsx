@@ -1,25 +1,4 @@
-import Footer from '@/components/Footer';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCaptcha,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import { flushSync } from 'react-dom';
-import Settings from '../../../../config/defaultSettings';
-import {loginUsingPOST} from "@/services/bi/userController";
+
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -94,7 +73,7 @@ const Login: React.FC = () => {
       height: '100vh',
       overflow: 'auto',
       backgroundImage:
-      "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
       // 页面背景
       //   "url('https://cdn.pixabay.com/photo/2016/04/12/22/35/watercolour-1325656_960_720.jpg')",
       backgroundSize: '100% 100%',
@@ -119,7 +98,7 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await loginUsingPOST({ ...values });
-      console.log( "msg : " +msg);
+      console.log('msg : ' + msg);
       if (msg.code === 200) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -138,15 +117,14 @@ const Login: React.FC = () => {
       // 如果失败去设置用户错误信息
       setUserLoginState(msg);
     } catch (error) {
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
-      });
+      // const defaultLoginFailureMessage = intl.formatMessage({
+      //   id: 'pages.login.failure',
+      //   defaultMessage: '登录失败，请重试！',
+      // });
       // message.error(defaultLoginFailureMessage);
     }
   };
   const { status, type: loginType } = userLoginState;
-
 
   const logo = (
     <div style={{ display: 'flex', alignItems: 'left' }}>
@@ -408,7 +386,7 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      <Footer backgroundColor={"rgba(0, 0, 0, 0)"}/>
+      <Footer backgroundColor={'rgba(0, 0, 0, 0)'} />
     </div>
   );
 };
