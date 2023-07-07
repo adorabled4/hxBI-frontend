@@ -6,6 +6,13 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseBiResponse_ = {
+    code?: number;
+    data?: BiResponse;
+    description?: string;
+    message?: string;
+  };
+
   type BaseResponseBoolean_ = {
     code?: number;
     data?: boolean;
@@ -48,6 +55,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BiResponse = {
+    chartId?: number;
+    genChart?: string;
+    genResult?: string;
+  };
+
   type ChartAddRequest = {
     chartData?: string;
     chartType?: string;
@@ -72,6 +85,7 @@ declare namespace API {
     goal?: string;
     id?: number;
     isDelete?: number;
+    name?: string;
     updateTime?: string;
     userId?: number;
   };
@@ -110,6 +124,13 @@ declare namespace API {
     id: number;
   };
 
+  type getChartByAIUsingPOSTParams = {
+    biz?: string;
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
   type getChartEntityByIdUsingGETParams = {
     /** id */
     id?: number;
@@ -127,7 +148,7 @@ declare namespace API {
     pageSize?: number;
   };
 
-  type LoginParam = {
+  type LoginRequest = {
     password?: string;
     userAccount?: string;
   };
@@ -150,7 +171,7 @@ declare namespace API {
     total?: number;
   };
 
-  type RegisterParam = {
+  type RegisterRequest = {
     checkPassword?: string;
     password?: string;
     userAccount?: string;

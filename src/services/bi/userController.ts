@@ -70,7 +70,7 @@ export async function getUserListUsingGET(
 }
 
 /** 用户登录 POST /api/user/login */
-export async function loginUsingPOST(body: API.LoginParam, options?: { [key: string]: any }) {
+export async function loginUsingPOST(body: API.LoginRequest, options?: { [key: string]: any }) {
   return request<API.BaseResponse>('/api/user/login', {
     method: 'POST',
     headers: {
@@ -82,7 +82,10 @@ export async function loginUsingPOST(body: API.LoginParam, options?: { [key: str
 }
 
 /** 用户注册 POST /api/user/register */
-export async function registerUsingPOST(body: API.RegisterParam, options?: { [key: string]: any }) {
+export async function registerUsingPOST(
+  body: API.RegisterRequest,
+  options?: { [key: string]: any },
+) {
   return request<API.BaseResponse>('/api/user/register', {
     method: 'POST',
     headers: {
