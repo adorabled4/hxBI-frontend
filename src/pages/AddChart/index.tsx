@@ -52,7 +52,7 @@ const AddChart: React.FC = () => {
         message.success('分析成功');
         const chartOption = JSON.parse(res.data.genChart ?? '');
         if (!chartOption) {
-          throw new Error('图表代码解析错误');
+          message.error('图表代码解析错误');
         } else {
           setChart(res.data);
           setOption(chartOption);
