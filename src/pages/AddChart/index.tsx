@@ -1,22 +1,9 @@
-import { getChartByAIUsingPOST } from '@/services/bi/chartController';
+import { getChartByAISyncUsingPOST } from '@/services/bi/chartController';
 import { UploadOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Card,
-  Col,
-  Divider,
-  Form,
-  Input,
-  message,
-  Row,
-  Select,
-  Space,
-  Spin,
-  Upload,
-} from 'antd';
+import { Button,Card,Col,Divider,Form,Input,message,Row,Select,Space,Spin,Upload } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import ReactECharts from 'echarts-for-react';
-import React, { useState } from 'react';
+import React,{ useState } from 'react';
 
 /**
  * 添加图表页面
@@ -45,7 +32,7 @@ const AddChart: React.FC = () => {
       file: undefined,
     };
     try {
-      const res = await getChartByAIUsingPOST(params, {}, values.file.file.originFileObj);
+      const res = await getChartByAISyncUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {

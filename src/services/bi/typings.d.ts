@@ -64,28 +64,34 @@ declare namespace API {
   type ChartAddRequest = {
     chartData?: string;
     chartType?: string;
+    execmessage?: string;
     goal?: string;
     name?: string;
+    status?: string;
   };
 
   type ChartEditRequest = {
     chartData?: string;
     chartType?: string;
+    execmessage?: string;
     goal?: string;
     id?: number;
     name?: string;
+    status?: string;
   };
 
   type ChartEntity = {
     chartData?: string;
     chartType?: string;
     createTime?: string;
+    execmessage?: string;
     genChart?: string;
     genResult?: string;
     goal?: string;
     id?: number;
     isDelete?: number;
     name?: string;
+    status?: string;
     updateTime?: string;
     userId?: number;
   };
@@ -93,12 +99,14 @@ declare namespace API {
   type ChartQueryRequest = {
     chartType?: string;
     current?: number;
+    execmessage?: string;
     goal?: string;
     id?: number;
     name?: string;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
+    status?: string;
     userId?: number;
   };
 
@@ -106,12 +114,14 @@ declare namespace API {
     chartData?: string;
     chartType?: string;
     createTime?: string;
+    execmessage?: string;
     genChart?: string;
     genResult?: string;
     goal?: string;
     id?: number;
     isDelete?: number;
     name?: string;
+    status?: string;
     updateTime?: string;
   };
 
@@ -124,8 +134,13 @@ declare namespace API {
     id: number;
   };
 
-  type getChartByAIUsingPOSTParams = {
-    biz?: string;
+  type getChartByAiAsyncUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
+  type getChartByAISyncUsingPOSTParams = {
     chartType?: string;
     goal?: string;
     name?: string;
