@@ -1,9 +1,14 @@
-
-
 /**
  * 添加图表（异步）页面
  * @constructor
  */
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Card, Form, Input, message, Select, Space, Upload } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import TextArea from 'antd/es/input/TextArea';
+import React, { useState } from 'react';
+import {getChartByAiAsyncMqUsingPOST} from "@/services/bi/chartController";
+
 const AddChartAsync: React.FC = () => {
   const [form] = useForm();
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -24,8 +29,8 @@ const AddChartAsync: React.FC = () => {
       file: undefined,
     };
     try {
-      const res = await getChartByAiAsyncUsingPOST(params, {}, values.file.file.originFileObj);
-      // const res = await genChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
+      // const res = await getChartByAiAsyncUsingPOST(params, {}, values.file.file.originFileObj);
+      const res = await getChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {

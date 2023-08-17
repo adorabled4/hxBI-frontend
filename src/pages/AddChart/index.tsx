@@ -1,4 +1,4 @@
-import { getChartByAISyncUsingPOST } from '@/services/bi/chartController';
+import { getChartByAiSyncUsingPOST } from '@/services/bi/chartController';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button,Card,Col,Divider,Form,Input,message,Row,Select,Space,Spin,Upload } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
@@ -32,7 +32,7 @@ const AddChart: React.FC = () => {
       file: undefined,
     };
     try {
-      const res = await getChartByAISyncUsingPOST(params, {}, values.file.file.originFileObj);
+      const res = await getChartByAiSyncUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {

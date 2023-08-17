@@ -47,10 +47,10 @@ export async function editChartEntityUsingPOST(
   });
 }
 
-/** getChartByAISync POST /api/chart/gen */
-export async function getChartByAISyncUsingPOST(
+/** getChartByAiSync POST /api/chart/gen */
+export async function getChartByAiSyncUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getChartByAISyncUsingPOSTParams,
+  params: API.getChartByAiSyncUsingPOSTParams,
   body: {},
   file?: File,
   options?: { [key: string]: any },
@@ -109,6 +109,42 @@ export async function getChartByAiAsyncUsingPOST(
   });
 
   return request<API.BaseResponseBiResponse_>('/api/chart/gen/async', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    data: formData,
+    requestType: 'form',
+    ...(options || {}),
+  });
+}
+
+/** getChartByAiAsyncMq POST /api/chart/gen/async/mq */
+export async function getChartByAiAsyncMqUsingPOST(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getChartByAiAsyncMqUsingPOSTParams,
+  body: {},
+  file?: File,
+  options?: { [key: string]: any },
+) {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append('file', file);
+  }
+
+  Object.keys(body).forEach((ele) => {
+    const item = (body as any)[ele];
+
+    if (item !== undefined && item !== null) {
+      formData.append(
+        ele,
+        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
+      );
+    }
+  });
+
+  return request<API.BaseResponseBiResponse_>('/api/chart/gen/async/mq', {
     method: 'POST',
     params: {
       ...params,

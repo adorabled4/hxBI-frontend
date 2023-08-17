@@ -1,10 +1,16 @@
-import { listMyChartEntityByPageUsingPOST } from '@/services/bi/chartController';
+import {
+  deleteChartEntityUsingPOST,
+  listMyChartEntityByPageUsingPOST,
+} from '@/services/bi/chartController';
 
 import { useModel } from '@@/exports';
-import { Avatar, Card, List, message, Result } from 'antd';
+
+import { Card, message, Result } from 'antd';
 import Search from 'antd/es/input/Search';
+import { Avatar } from 'antd/lib';
+import List from 'antd/lib/list';
 import ReactECharts from 'echarts-for-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * 我的图表页面
@@ -55,6 +61,19 @@ const MyChartPage: React.FC = () => {
     loadData();
   }, [searchParams]);
 
+  useEffect(() => {
+
+  }, []);
+
+  const handleDeleteChart = async (chartId: number) => {
+    const param = {
+      id: chartId,
+    };
+    deleteChartEntityUsingPOST(param);
+    // 删除完成后调用setRefreshData来刷新页面数据
+    loadData();
+  };
+
   return (
     <div className="my-chart-page">
       <div>
@@ -104,6 +123,7 @@ const MyChartPage: React.FC = () => {
                 title={item.name}
                 description={item.chartType ? '图表类型：' + item.chartType : undefined}
               />
+              <a onClick={() => handleDeleteChart(item.id)}>删除</a>
               <>
                 {item.status === 'wait' && (
                   <>

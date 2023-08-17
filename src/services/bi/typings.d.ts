@@ -64,7 +64,7 @@ declare namespace API {
   type ChartAddRequest = {
     chartData?: string;
     chartType?: string;
-    execmessage?: string;
+    execMessage?: string;
     goal?: string;
     name?: string;
     status?: string;
@@ -73,7 +73,7 @@ declare namespace API {
   type ChartEditRequest = {
     chartData?: string;
     chartType?: string;
-    execmessage?: string;
+    execMessage?: string;
     goal?: string;
     id?: number;
     name?: string;
@@ -84,11 +84,11 @@ declare namespace API {
     chartData?: string;
     chartType?: string;
     createTime?: string;
-    execmessage?: string;
+    execMessage?: string;
     genChart?: string;
     genResult?: string;
     goal?: string;
-    id?: number;
+    id?: string;
     isDelete?: number;
     name?: string;
     status?: string;
@@ -99,7 +99,7 @@ declare namespace API {
   type ChartQueryRequest = {
     chartType?: string;
     current?: number;
-    execmessage?: string;
+    execMessage?: string;
     goal?: string;
     id?: number;
     name?: string;
@@ -114,7 +114,7 @@ declare namespace API {
     chartData?: string;
     chartType?: string;
     createTime?: string;
-    execmessage?: string;
+    execMessage?: string;
     genChart?: string;
     genResult?: string;
     goal?: string;
@@ -134,13 +134,19 @@ declare namespace API {
     id: number;
   };
 
+  type getChartByAiAsyncMqUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
   type getChartByAiAsyncUsingPOSTParams = {
     chartType?: string;
     goal?: string;
     name?: string;
   };
 
-  type getChartByAISyncUsingPOSTParams = {
+  type getChartByAiSyncUsingPOSTParams = {
     chartType?: string;
     goal?: string;
     name?: string;
