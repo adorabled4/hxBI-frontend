@@ -69,9 +69,12 @@ export async function getUserListUsingGET(
   });
 }
 
-/** 用户登录 POST /api/user/login */
-export async function loginUsingPOST(body: API.LoginRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponse>('/api/user/login', {
+/** 用户登录-email POST /api/user/login/email */
+export async function loginUsingPOST(
+  body: API.LoginEmailRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponse>('/api/user/login/email', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -81,17 +84,47 @@ export async function loginUsingPOST(body: API.LoginRequest, options?: { [key: s
   });
 }
 
-/** 用户注册 POST /api/user/register */
-export async function registerUsingPOST(
-  body: API.RegisterRequest,
+/** 用户登录-email POST /api/user/login/email/quick */
+export async function quickLoginUsingPOST(
+  body: API.QuickLoginEmailRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponse>('/api/user/register', {
+  return request<API.BaseResponse>('/api/user/login/email/quick', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** 用户注册-email POST /api/user/register/email */
+export async function registerByEmailUsingPOST(
+  body: API.VerifyCodeRegisterRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponse>('/api/user/register/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** sendVerifyCode GET /api/user/send/code */
+export async function sendVerifyCodeUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.sendVerifyCodeUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseString_>('/api/user/send/code', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

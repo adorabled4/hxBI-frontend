@@ -1,5 +1,10 @@
 import Footer from '@/components/Footer';
 import {
+  loginUsingPOST,
+  quickLoginUsingPOST,
+  sendVerifyCodeUsingGET,
+} from '@/services/bi/userController';
+import {
   AlipayCircleOutlined,
   LockOutlined,
   MobileOutlined,
@@ -16,11 +21,10 @@ import {
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
+import { useForm } from 'antd/es/form/Form';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
-import {loginUsingPOST} from "@/services/bi/userController";
-
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -84,7 +88,6 @@ const LoginMessage: React.FC<{
 };
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.BaseResponse>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
@@ -116,10 +119,29 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (values: API.LoginParam) => {
+  const [form] = useForm();
+
+  const handleSendCode = async () => {
+    const email = form.getFieldValue('email');
+    const result = await sendVerifyCodeUsingGET({
+      email,
+    });
+    console.log('email' + email);
+    if (result.code === 200) {
+      message.success('验证码发送成功, 请前往邮箱查看!');
+    }
+  };
+
+  const handleTotalSubmit = async (values: any) => {
+    let msg;
     try {
+      if (type === 'mobile') {
+        msg = await quickLoginUsingPOST({ ...values });
+        // 快速登录
+      } else {
+        msg = await loginUsingPOST({ ...values });
+      }
       // 登录
-      const msg = await loginUsingPOST({ ...values });
       console.log('msg : ' + msg);
       if (msg.code === 200) {
         const defaultLoginSuccessMessage = intl.formatMessage({
@@ -136,17 +158,8 @@ const Login: React.FC = () => {
         return;
       }
       console.log(msg);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
-    } catch (error) {
-      // const defaultLoginFailureMessage = intl.formatMessage({
-      //   id: 'pages.login.failure',
-      //   defaultMessage: '登录失败，请重试！',
-      // });
-      // message.error(defaultLoginFailureMessage);
-    }
+    } catch (error) {}
   };
-  const { status, type: loginType } = userLoginState;
 
   const logo = (
     <div style={{ display: 'flex', alignItems: 'left' }}>
@@ -187,6 +200,7 @@ const Login: React.FC = () => {
       AI Business Intelligence
     </span>
   );
+  let loginType;
   return (
     <div className={containerClassName}>
       <Helmet>
@@ -206,6 +220,7 @@ const Login: React.FC = () => {
         }}
       >
         <LoginForm
+          form={form}
           style={{ margin: -14 }}
           contentStyle={{
             minWidth: 280,
@@ -226,7 +241,8 @@ const Login: React.FC = () => {
             <ActionIcons key="icons" />,
           ]}
           onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParam);
+            // await handleSubmit(values as API.LoginEmailRequest);
+            await handleTotalSubmit(values);
           }}
         >
           <Tabs
@@ -245,7 +261,8 @@ const Login: React.FC = () => {
                 key: 'mobile',
                 label: intl.formatMessage({
                   id: 'pages.login.phoneLogin.tab',
-                  defaultMessage: '手机号登录',
+                  // defaultMessage: '手机号登录',
+                  defaultMessage: '快速登录',
                 }),
               },
             ]}
@@ -262,14 +279,14 @@ const Login: React.FC = () => {
           {type === 'account' && (
             <>
               <ProFormText
-                name="userAccount"
+                name="email"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.username.placeholder',
-                  defaultMessage: '用户名: admin or user',
+                  defaultMessage: '请输入您的邮箱地址',
                 })}
                 rules={[
                   {
@@ -277,7 +294,7 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.username.required"
-                        defaultMessage="请输入用户名!"
+                        defaultMessage="请输入您的邮箱地址!"
                       />
                     ),
                   },
@@ -291,7 +308,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.password.placeholder',
-                  defaultMessage: '密码: ant.design',
+                  defaultMessage: '请输入密码',
                 })}
                 rules={[
                   {
@@ -316,10 +333,10 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <MobileOutlined />,
                 }}
-                name="mobile"
+                name="email"
                 placeholder={intl.formatMessage({
                   id: 'pages.login.phoneNumber.placeholder',
-                  defaultMessage: '手机号',
+                  defaultMessage: '请输入您的邮箱地址',
                 })}
                 rules={[
                   {
@@ -327,16 +344,17 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.phoneNumber.required"
-                        defaultMessage="请输入手机号！"
+                        defaultMessage="请输入邮箱地址！"
                       />
                     ),
                   },
                   {
-                    pattern: /^1\d{10}$/,
+                    // pattern: /^1\d{10}$/,
+                    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: (
                       <FormattedMessage
                         id="pages.login.phoneNumber.invalid"
-                        defaultMessage="手机号格式错误！"
+                        defaultMessage="邮箱格式错误！"
                       />
                     ),
                   },
@@ -366,7 +384,7 @@ const Login: React.FC = () => {
                     defaultMessage: '获取验证码',
                   });
                 }}
-                name="captcha"
+                name="code"
                 rules={[
                   {
                     required: true,
@@ -378,15 +396,7 @@ const Login: React.FC = () => {
                     ),
                   },
                 ]}
-                onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
-                  message.success('获取验证码成功！验证码为：1234');
-                }}
+                onGetCaptcha={handleSendCode}
               />
             </>
           )}

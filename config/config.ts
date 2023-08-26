@@ -1,6 +1,5 @@
 // https://umijs.org/config/
 import { defineConfig } from '@umijs/max';
-import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
@@ -76,7 +75,7 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
+  title: 'hxBI',
   layout: {
     locale: true,
     ...defaultSettings,
@@ -138,10 +137,11 @@ export default defineConfig({
     {
       requestLibPath: "import { request } from '@umijs/max'",
       // 或者使用在线的版本
-      schemaPath: "http://localhost:6848/api/v2/api-docs?group=%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83",
+      schemaPath:
+        'http://localhost:6848/api/v2/api-docs?group=%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83',
       // schemaPath: join(__dirname, 'oneapi.json'),
       mock: false,
-      projectName:"bi"
+      projectName: 'bi',
     },
     // {
     //   requestLibPath: "import { request } from '@umijs/max'",

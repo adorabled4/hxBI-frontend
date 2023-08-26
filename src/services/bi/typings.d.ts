@@ -20,9 +20,16 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponseChartEntity_ = {
+  type BaseResponseChart_ = {
     code?: number;
-    data?: ChartEntity;
+    data?: Chart;
+    description?: string;
+    message?: string;
+  };
+
+  type BaseResponseListBoolean_ = {
+    code?: number;
+    data?: boolean[];
     description?: string;
     message?: string;
   };
@@ -41,9 +48,23 @@ declare namespace API {
     message?: string;
   };
 
-  type BaseResponsePageChartEntity_ = {
+  type BaseResponseObject_ = {
     code?: number;
-    data?: PageChartEntity_;
+    data?: Record<string, any>;
+    description?: string;
+    message?: string;
+  };
+
+  type BaseResponsePageChart_ = {
+    code?: number;
+    data?: PageChart_;
+    description?: string;
+    message?: string;
+  };
+
+  type BaseResponseString_ = {
+    code?: number;
+    data?: string;
     description?: string;
     message?: string;
   };
@@ -59,6 +80,21 @@ declare namespace API {
     chartId?: number;
     genChart?: string;
     genResult?: string;
+  };
+
+  type Chart = {
+    chartId?: number;
+    chartType?: string;
+    createTime?: string;
+    execMessage?: string;
+    genChart?: string;
+    genResult?: string;
+    goal?: string;
+    id?: string;
+    name?: string;
+    status?: string;
+    userId?: number;
+    version?: number;
   };
 
   type ChartAddRequest = {
@@ -78,22 +114,6 @@ declare namespace API {
     id?: number;
     name?: string;
     status?: string;
-  };
-
-  type ChartEntity = {
-    chartData?: string;
-    chartType?: string;
-    createTime?: string;
-    execMessage?: string;
-    genChart?: string;
-    genResult?: string;
-    goal?: string;
-    id?: string;
-    isDelete?: number;
-    name?: string;
-    status?: string;
-    updateTime?: string;
-    userId?: number;
   };
 
   type ChartQueryRequest = {
@@ -123,6 +143,11 @@ declare namespace API {
     name?: string;
     status?: string;
     updateTime?: string;
+  };
+
+  type compressChartTestUsingGETParams = {
+    /** id */
+    id: number;
   };
 
   type DeleteRequest = {
@@ -169,33 +194,70 @@ declare namespace API {
     pageSize?: number;
   };
 
-  type LoginRequest = {
+  type LoginEmailRequest = {
+    email?: string;
     password?: string;
-    userAccount?: string;
   };
 
-  type OrderItem = {
-    asc?: boolean;
-    column?: string;
+  type Pageable = {
+    offset?: number;
+    pageNumber?: number;
+    pageSize?: number;
+    paged?: boolean;
+    sort?: Sort;
+    unpaged?: boolean;
   };
 
-  type PageChartEntity_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: ChartEntity[];
-    searchCount?: boolean;
+  type PageChart_ = {
+    content?: Chart[];
+    empty?: boolean;
+    first?: boolean;
+    last?: boolean;
+    number?: number;
+    numberOfElements?: number;
+    pageable?: Pageable;
     size?: number;
-    total?: number;
+    sort?: Sort;
+    totalElements?: number;
+    totalPages?: number;
   };
 
-  type RegisterRequest = {
-    checkPassword?: string;
-    password?: string;
-    userAccount?: string;
+  type pushMessageUsingGETParams = {
+    /** message */
+    message?: string;
+    /** userId */
+    userId: string;
+  };
+
+  type QuickLoginEmailRequest = {
+    code?: string;
+    email?: string;
+  };
+
+  type sendVerifyCodeUsingGETParams = {
+    /** email */
+    email: string;
+  };
+
+  type Sort = {
+    empty?: boolean;
+    sorted?: boolean;
+    unsorted?: boolean;
+  };
+
+  type testGetFromMongoUsingGETParams = {
+    /** id */
+    id: number;
+  };
+
+  type testGetFromMysqlUsingGETParams = {
+    /** id */
+    id: number;
+  };
+
+  type testInsertMongoSingleUsingGETParams = {
+    /** id */
+    id: number;
   };
 
   type UserEntity = {
@@ -208,7 +270,6 @@ declare namespace API {
     isDelete?: number;
     phone?: string;
     updateTime?: string;
-    userAccount?: string;
     userId?: number;
     userName?: string;
     userPassword?: string;
@@ -222,9 +283,14 @@ declare namespace API {
     email?: string;
     gender?: number;
     phone?: string;
-    userAccount?: string;
     userId?: number;
     userName?: string;
     userRole?: string;
+  };
+
+  type VerifyCodeRegisterRequest = {
+    code?: string;
+    email?: string;
+    password?: string;
   };
 }

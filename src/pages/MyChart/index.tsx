@@ -27,7 +27,7 @@ const MyChartPage: React.FC = () => {
   const [searchParams, setSearchParams] = useState<API.ChartQueryRequest>({ ...initSearchParams });
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState ?? {};
-  const [chartList, setChartList] = useState<API.ChartEntity[]>();
+  const [chartList, setChartList] = useState<API.Chart[]>();
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -36,11 +36,11 @@ const MyChartPage: React.FC = () => {
     try {
       const res = await listMyChartEntityByPageUsingPOST(searchParams);
       if (res.data) {
-        setChartList(res.data.records ?? []);
-        setTotal(res.data.total ?? 0);
+        setChartList(res.data.content ?? []);
+        setTotal(res.data.totalElements ?? 0);
         // 隐藏图表的 title
-        if (res.data.records) {
-          res.data.records.forEach((data) => {
+        if (res.data.content) {
+          res.data.content.forEach((data) => {
             if (data.status === 'succeed') {
               const chartOption = JSON.parse(data.genChart ?? '{}');
               chartOption.title = undefined;
@@ -61,9 +61,7 @@ const MyChartPage: React.FC = () => {
     loadData();
   }, [searchParams]);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   const handleDeleteChart = async (chartId: number) => {
     const param = {
@@ -123,7 +121,7 @@ const MyChartPage: React.FC = () => {
                 title={item.name}
                 description={item.chartType ? '图表类型：' + item.chartType : undefined}
               />
-              <a onClick={() => handleDeleteChart(item.id)}>删除</a>
+              <a onClick={() => handleDeleteChart(item.chartId)}>删除</a>
               <>
                 {item.status === 'wait' && (
                   <>

@@ -161,7 +161,7 @@ export async function getChartEntityByIdUsingGET(
   params: API.getChartEntityByIdUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseChartEntity_>('/api/chart/get', {
+  return request<API.BaseResponseChart_>('/api/chart/get', {
     method: 'GET',
     params: {
       ...params,
@@ -175,7 +175,7 @@ export async function listChartEntityByPageUsingPOST(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageChartEntity_>('/api/chart/list/page', {
+  return request<API.BaseResponsePageChart_>('/api/chart/list/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ export async function listMyChartEntityByPageUsingPOST(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageChartEntity_>('/api/chart/my/list/page', {
+  return request<API.BaseResponsePageChart_>('/api/chart/my/list/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
