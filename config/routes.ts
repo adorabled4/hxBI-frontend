@@ -23,6 +23,20 @@ export default [
     ],
   },
   {
+    name: 'center',
+    path: '/account/center',
+    icon: 'user',
+    component: './User/AccountCenter',
+    hideInMenu: true
+  },
+  {
+    name: 'center',
+    path: '/account/settings',
+    icon: 'user',
+    component: './User/UpdateUser',
+    hideInMenu: true
+  },
+  {
     path: '/welcome',
     name: 'welcome',
     icon: 'smile',

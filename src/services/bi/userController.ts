@@ -130,7 +130,10 @@ export async function sendVerifyCodeUsingGET(
 }
 
 /** 更新用户 POST /api/user/update */
-export async function updateUserInfoUsingPOST(body: API.UserVO, options?: { [key: string]: any }) {
+export async function updateUserInfoUsingPOST(
+  body: API.UserUpdateRequest,
+  options?: { [key: string]: any },
+) {
   return request<API.BaseResponse>('/api/user/update', {
     method: 'POST',
     headers: {

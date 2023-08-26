@@ -276,6 +276,16 @@ declare namespace API {
     userRole?: string;
   };
 
+  type UserUpdateRequest = {
+    address?: string;
+    avatarUrl?: string;
+    birth?: string;
+    email?: string;
+    gender?: number;
+    phone?: string;
+    userName?: string;
+  };
+
   type UserVO = {
     address?: string;
     avatarUrl?: string;
