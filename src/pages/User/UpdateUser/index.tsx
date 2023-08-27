@@ -1,7 +1,7 @@
 import { updateUserInfoUsingPOST } from '@/services/bi/userController';
-import { AntDesignOutlined } from '@ant-design/icons';
+import { AntDesignOutlined, UploadOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { Avatar, Button, Form, Input, InputNumber, message } from 'antd';
+import { Avatar, Button, Col, Form, Input, InputNumber, message, Row, Upload } from 'antd';
 import { Cascader, DatePicker, Select } from 'antd/lib';
 import React from 'react';
 
@@ -108,32 +108,27 @@ const UpdateUser: React.FC = () => {
   // 获取当前用户信息
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
-
   const onFinish = async (values: any) => {
     console.log(values);
-    const selectedAddress = values.user.address; // 获取用户选择的地址数组
+    const selectedAddress = values.address; // 获取用户选择的地址数组
     if (selectedAddress) {
       const province = selectedAddress[0];
       const city = selectedAddress[1];
       const fullAddress = `${province} ${city}`;
       // 拼接省份和市区
-      const formData = {
-        ...values.user, // 保留其他参数
-        address: fullAddress, // 添加拼接后的地址
-      };
-      const res = await updateUserInfoUsingPOST(formData);
-      if (res.code === 200) {
-        message.success('更新成功!');
-      } else {
-        message.error(res.description);
-      }
-    }else{
-      const res = await updateUserInfoUsingPOST(values.user);
-      if (res.code === 200) {
-        message.success('更新成功!');
-      } else {
-        message.error(res.description);
-      }
+      values.address = fullAddress;
+    }
+    // 格式化日期
+    const formattedBirth = new Date(values.birth).toDateString();
+    const params = {
+      ...values,
+      birth: formattedBirth, // 使用格式化后的日期
+      file: undefined,
+    };
+    console.log(values);
+    const res = await updateUserInfoUsingPOST(params, {}, values.file.file.originFileObj);
+    if (res.code === 200) {
+      message.success('更新成功!');
     }
   };
   return (
@@ -144,40 +139,40 @@ const UpdateUser: React.FC = () => {
       style={{ maxWidth: 600 }}
       validateMessages={validateMessages}
     >
-
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Avatar
-          size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-          icon={<AntDesignOutlined />}
-          src={currentUser.avatarUrl}
-        />
+        <Row>
+          <Col>
+            <Avatar
+              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+              icon={<AntDesignOutlined />}
+              src={currentUser.avatarUrl}
+            />
+          </Col>
+        </Row>
       </Form.Item>
-      {/*<AvatarUpload />*/}
+      <Form.Item name="file" label="更新头像">
+        <Upload name="file" maxCount={1}>
+          <Button icon={<UploadOutlined />}>点击上传</Button>
+        </Upload>
+      </Form.Item>
+      {/*<UploadAvatar />*/}
       <Form.Item
-        name={['user', 'userName']}
+        name={'userName'}
         label="昵称"
         rules={[{ required: true }]}
         initialValue={currentUser.userName}
       >
         <Input />
       </Form.Item>
-      {/*<Form.Item*/}
-      {/*  name={['user', 'email']}*/}
-      {/*  label="邮箱(用于登录)"*/}
-      {/*  rules={[{ type: 'email' }]}*/}
-      {/*  initialValue={currentUser.email}*/}
-      {/*>*/}
-      {/*  <Input />*/}
-      {/*</Form.Item>*/}
       <Form.Item
-        name={['user', 'age']}
+        name={'age'}
         label="年龄"
         rules={[{ type: 'number', min: 0, max: 99 }]}
         initialValue={currentUser.age}
       >
         <InputNumber />
       </Form.Item>
-      <Form.Item name={['user', 'gender']} label="性别" initialValue={currentUser.gender}>
+      <Form.Item name={'gender'} label="性别" initialValue={currentUser.gender}>
         <Select>
           <Select.Option value={1}>男</Select.Option>
           <Select.Option value={0}>女</Select.Option>
@@ -188,7 +183,7 @@ const UpdateUser: React.FC = () => {
       {/*  <Input />*/}
       {/*</Form.Item>*/}
       <Form.Item
-        name={['user', 'address']}
+        name={'address'}
         label="所在地址"
         initialValue={currentUser.address}
         rules={[{ required: false, message: '请选择地址' }]}
@@ -199,15 +194,12 @@ const UpdateUser: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item name={['user', 'phone']} label="电话" initialValue={currentUser.phone}>
+      <Form.Item name={'phone'} label="电话" initialValue={currentUser.phone}>
         <Input />
       </Form.Item>
-      <Form.Item name={['user', 'birth']} label={'出生日期'}>
+      <Form.Item name={'birth'} label={'出生日期'}>
         <DatePicker showTime />
       </Form.Item>
-      {/*<Form.Item name={['user', 'introduction']} label="Introduction" initialValue={currentUser.phone}>*/}
-      {/*  <Input.TextArea/>*/}
-      {/*</Form.Item>*/}
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit">
           保存

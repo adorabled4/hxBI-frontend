@@ -260,6 +260,16 @@ declare namespace API {
     id: number;
   };
 
+  type updateUserInfoUsingPOSTParams = {
+    address?: string;
+    avatarUrl?: string;
+    birth?: string;
+    email?: string;
+    gender?: number;
+    phone?: string;
+    userName?: string;
+  };
+
   type UserEntity = {
     address?: string;
     avatarUrl?: string;
@@ -267,6 +277,7 @@ declare namespace API {
     createTime?: string;
     email?: string;
     gender?: number;
+    imageData?: string;
     isDelete?: number;
     phone?: string;
     updateTime?: string;
@@ -276,22 +287,13 @@ declare namespace API {
     userRole?: string;
   };
 
-  type UserUpdateRequest = {
-    address?: string;
-    avatarUrl?: string;
-    birth?: string;
-    email?: string;
-    gender?: number;
-    phone?: string;
-    userName?: string;
-  };
-
   type UserVO = {
     address?: string;
     avatarUrl?: string;
     birth?: string;
     email?: string;
     gender?: number;
+    imageData?: string;
     phone?: string;
     userId?: number;
     userName?: string;
