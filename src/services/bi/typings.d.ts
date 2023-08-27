@@ -55,6 +55,13 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponsePage_ = {
+    code?: number;
+    data?: Page;
+    description?: string;
+    message?: string;
+  };
+
   type BaseResponsePageChart_ = {
     code?: number;
     data?: PageChart_;
@@ -199,6 +206,24 @@ declare namespace API {
     password?: string;
   };
 
+  type OrderItem = {
+    asc?: boolean;
+    column?: string;
+  };
+
+  type Page = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: Record<string, any>[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
+  };
+
   type Pageable = {
     offset?: number;
     pageNumber?: number;
@@ -277,7 +302,6 @@ declare namespace API {
     createTime?: string;
     email?: string;
     gender?: number;
-    imageData?: string;
     isDelete?: number;
     phone?: string;
     updateTime?: string;
@@ -293,7 +317,6 @@ declare namespace API {
     birth?: string;
     email?: string;
     gender?: number;
-    imageData?: string;
     phone?: string;
     userId?: number;
     userName?: string;

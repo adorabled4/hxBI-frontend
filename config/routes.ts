@@ -55,6 +55,12 @@ export default [
     component: './MyChart',
   },
   {
+    path: '/unsucceed_chart',
+    name: '其他图表',
+    icon: 'pieChart',
+    component: './Chart/UnsucceedChart',
+  },
+  {
     path: '/add_chart_async',
     name: '智能分析（异步）',
     icon: 'barChart',
