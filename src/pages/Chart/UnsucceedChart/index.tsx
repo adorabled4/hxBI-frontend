@@ -1,6 +1,7 @@
 import {
   deleteChartEntityUsingPOST,
   getUnsucceedChartUsingPOST,
+  regenerateChartUsingGET,
 } from '@/services/bi/chartController';
 import { message, Space, Table, Tag } from 'antd';
 import Search from 'antd/es/input/Search';
@@ -76,6 +77,14 @@ const UnsucceedChart: React.FC = () => {
 
   const shouldCellUpdate = (record: any, prevRecord: any) => record !== prevRecord;
 
+  const handleReGen = async (chartId: number) => {
+    console.log(chartId);
+    const res = regenerateChartUsingGET({ chartId: chartId });
+    if (res.code === 200) {
+      message.success('重试成功!请稍等~');
+    }
+  };
+
   const ChartColumns: ColumnsType<ChartType> = [
     {
       title: '图表名称',
@@ -127,10 +136,12 @@ const UnsucceedChart: React.FC = () => {
     },
     {
       title: '操作',
-      key: 'action',
-      render: (_, record) => (
+      key: 'id',
+      dataIndex: 'id',
+      render: (id) => (
         <Space size="middle">
-          <a onClick={() => handleDeleteChart(record.id)}>删除</a>
+          <a onClick={() => handleDeleteChart(id)}>删除</a>
+          <a onClick={() => handleReGen(id)}>重新生成</a>
         </Space>
       ),
     },

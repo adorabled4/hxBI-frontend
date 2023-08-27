@@ -172,12 +172,6 @@ declare namespace API {
     name?: string;
   };
 
-  type getChartByAiAsyncUsingPOSTParams = {
-    chartType?: string;
-    goal?: string;
-    name?: string;
-  };
-
   type getChartByAiSyncUsingPOSTParams = {
     chartType?: string;
     goal?: string;
@@ -257,6 +251,11 @@ declare namespace API {
   type QuickLoginEmailRequest = {
     code?: string;
     email?: string;
+  };
+
+  type regenerateChartUsingGETParams = {
+    /** chartId */
+    chartId: number;
   };
 
   type sendVerifyCodeUsingGETParams = {

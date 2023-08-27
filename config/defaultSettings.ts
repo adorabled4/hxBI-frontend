@@ -7,16 +7,17 @@ const Settings: ProLayoutProps & {
   pwa?: boolean;
   logo?: string;
 } = {
-  navTheme: 'light',
+  "navTheme": "light",
+  "colorPrimary": "#2F54EB",
+  "layout": "top",
+  "contentWidth": "Fixed",
+  "fixedHeader": true,
+  "fixSiderbar": true,
+  "pwa": true,
+  "splitMenus": false,
   // 拂晓蓝
-  colorPrimary: '#1890ff',
-  layout: 'mix',
-  contentWidth: 'Fluid',
-  fixedHeader: false,
-  fixSiderbar: true,
   colorWeak: false,
   title: 'hxBI',
-  pwa: true,
   // logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   logo: './logo.svg',
   iconfontUrl: '',

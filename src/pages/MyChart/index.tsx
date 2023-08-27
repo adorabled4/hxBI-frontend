@@ -5,7 +5,7 @@ import {
 
 import { useModel } from '@@/exports';
 
-import { Card, message, Result } from 'antd';
+import {Card, Col, message, Result, Row, Tag} from 'antd';
 import Search from 'antd/es/input/Search';
 import { Avatar } from 'antd/lib';
 import List from 'antd/lib/list';
@@ -118,8 +118,23 @@ const MyChartPage: React.FC = () => {
             <Card style={{ width: '100%' }}>
               <List.Item.Meta
                 avatar={<Avatar src={currentUser && currentUser.avatarUrl} />}
-                title={item.name}
-                description={item.chartType ? '图表类型：' + item.chartType : undefined}
+                title={
+                <>
+                  <Row>
+                    <Col lg={8} md={14}>
+                      {item.name}
+                    </Col>
+                    <Col>
+                      <Tag color={"red"} >版本: {item.version}</Tag>
+                    </Col>
+                  </Row>
+                </>
+                }
+                description={
+                <>
+                  <a>{item.chartType ? '图表类型：' + item.chartType : undefined}</a>
+                </>
+                }
               />
               <a onClick={() => handleDeleteChart(item.chartId)}>删除</a>
               <>

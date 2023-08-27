@@ -41,6 +41,7 @@ export default [
     name: 'welcome',
     icon: 'smile',
     component: './Welcome',
+    hideInMenu: true
   },
   {
     path: '/add_chart',
@@ -56,7 +57,7 @@ export default [
   },
   {
     path: '/unsucceed_chart',
-    name: '其他图表',
+    name: '未生成图表',
     icon: 'pieChart',
     component: './Chart/UnsucceedChart',
   },
@@ -68,7 +69,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/my_chart',
   },
   {
     path: '*',

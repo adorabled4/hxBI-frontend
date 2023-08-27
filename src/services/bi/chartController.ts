@@ -83,42 +83,6 @@ export async function getChartByAiSyncUsingPOST(
   });
 }
 
-/** getChartByAiAsync POST /api/chart/gen/async */
-export async function getChartByAiAsyncUsingPOST(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getChartByAiAsyncUsingPOSTParams,
-  body: {},
-  file?: File,
-  options?: { [key: string]: any },
-) {
-  const formData = new FormData();
-
-  if (file) {
-    formData.append('file', file);
-  }
-
-  Object.keys(body).forEach((ele) => {
-    const item = (body as any)[ele];
-
-    if (item !== undefined && item !== null) {
-      formData.append(
-        ele,
-        typeof item === 'object' && !(item instanceof File) ? JSON.stringify(item) : item,
-      );
-    }
-  });
-
-  return request<API.BaseResponseBiResponse_>('/api/chart/gen/async', {
-    method: 'POST',
-    params: {
-      ...params,
-    },
-    data: formData,
-    requestType: 'form',
-    ...(options || {}),
-  });
-}
-
 /** getChartByAiAsyncMq POST /api/chart/gen/async/mq */
 export async function getChartByAiAsyncMqUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -211,6 +175,21 @@ export async function listMyChartEntityByPageUsingPOST(
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** regenerateChart GET /api/chart/regen/chart */
+export async function regenerateChartUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.regenerateChartUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseString_>('/api/chart/regen/chart', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
