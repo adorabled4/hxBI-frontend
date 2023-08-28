@@ -258,6 +258,11 @@ declare namespace API {
     chartId: number;
   };
 
+  type sendUsingGETParams = {
+    /** msg */
+    msg: string;
+  };
+
   type sendVerifyCodeUsingGETParams = {
     /** email */
     email: string;

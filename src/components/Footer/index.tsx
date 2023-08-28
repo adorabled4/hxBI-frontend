@@ -12,7 +12,7 @@ const Footer: React.FC<FooterProps> = ({ backgroundColor }) => {
   const intl = useIntl();
   const defaultMessage = intl.formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: 'TurboAPI',
+    defaultMessage: 'hxBI',
   });
 
   const currentYear = new Date().getFullYear();

@@ -134,6 +134,21 @@ export async function getChartEntityByIdUsingGET(
   });
 }
 
+/** getAllCharts POST /api/chart/list/chart/all */
+export async function getAllChartsUsingPOST(
+  body: API.ChartQueryRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponsePage_>('/api/chart/list/chart/all', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** getUnsucceedChart POST /api/chart/list/chart/unsucceed */
 export async function getUnsucceedChartUsingPOST(
   body: API.ChartQueryRequest,
