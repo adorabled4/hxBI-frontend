@@ -1,7 +1,7 @@
 import { updateUserInfoUsingPOST } from '@/services/bi/userController';
 import { AntDesignOutlined, UploadOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { Avatar, Button, Col, Form, Input, InputNumber, message, Row, Upload } from 'antd';
+import {Avatar, Button, Card, Col, Form, Input, InputNumber, message, Row, Upload} from 'antd';
 import { Cascader, DatePicker, Select } from 'antd/lib';
 import React from 'react';
 
@@ -132,80 +132,86 @@ const UpdateUser: React.FC = () => {
     }
   };
   return (
-    <Form
-      {...layout}
-      name="nest-messages"
-      onFinish={onFinish}
-      style={{ maxWidth: 600 }}
-      validateMessages={validateMessages}
-    >
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Row>
-          <Col>
-            <Avatar
-              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-              icon={<AntDesignOutlined />}
-              src={currentUser.avatarUrl}
-            />
-          </Col>
-        </Row>
-      </Form.Item>
-      <Form.Item name="file" label="更新头像">
-        <Upload name="file" maxCount={1}>
-          <Button icon={<UploadOutlined />}>点击上传</Button>
-        </Upload>
-      </Form.Item>
-      {/*<UploadAvatar />*/}
-      <Form.Item
-        name={'userName'}
-        label="昵称"
-        rules={[{ required: true }]}
-        initialValue={currentUser.userName}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name={'age'}
-        label="年龄"
-        rules={[{ type: 'number', min: 0, max: 99 }]}
-        initialValue={currentUser.age}
-      >
-        <InputNumber />
-      </Form.Item>
-      <Form.Item name={'gender'} label="性别" initialValue={currentUser.gender}>
-        <Select>
-          <Select.Option value={1}>男</Select.Option>
-          <Select.Option value={0}>女</Select.Option>
-        </Select>
-      </Form.Item>
+     <Row>
+       <Col offset={2} md={12}>
+         <Card>
+           <Form
+             {...layout}
+             name="nest-messages"
+             onFinish={onFinish}
+             style={{ maxWidth: 600 }}
+             validateMessages={validateMessages}
+           >
+             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+               <Row>
+                 <Col>
+                   <Avatar
+                     size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                     icon={<AntDesignOutlined />}
+                     src={currentUser.avatarUrl}
+                   />
+                 </Col>
+               </Row>
+             </Form.Item>
+             <Form.Item name="file" label="更新头像">
+               <Upload name="file" maxCount={1}>
+                 <Button icon={<UploadOutlined />}>点击上传</Button>
+               </Upload>
+             </Form.Item>
+             {/*<UploadAvatar />*/}
+             <Form.Item
+               name={'userName'}
+               label="昵称"
+               rules={[{ required: true }]}
+               initialValue={currentUser.userName}
+             >
+               <Input />
+             </Form.Item>
+             <Form.Item
+               name={'age'}
+               label="年龄"
+               rules={[{ type: 'number', min: 0, max: 99 }]}
+               initialValue={currentUser.age}
+             >
+               <InputNumber />
+             </Form.Item>
+             <Form.Item name={'gender'} label="性别" initialValue={currentUser.gender}>
+               <Select>
+                 <Select.Option value={1}>男</Select.Option>
+                 <Select.Option value={0}>女</Select.Option>
+               </Select>
+             </Form.Item>
 
-      {/*<Form.Item name={['user', 'address']} label="所在地址" initialValue={currentUser.address}>*/}
-      {/*  <Input />*/}
-      {/*</Form.Item>*/}
-      <Form.Item
-        name={'address'}
-        label="所在地址"
-        initialValue={currentUser.address}
-        rules={[{ required: false, message: '请选择地址' }]}
-      >
-        <Cascader
-          options={addressOptions} // 这是您提供的级联数据，后面会解释如何准备这个数据
-          placeholder="请选择地址"
-        />
-      </Form.Item>
+             {/*<Form.Item name={['user', 'address']} label="所在地址" initialValue={currentUser.address}>*/}
+             {/*  <Input />*/}
+             {/*</Form.Item>*/}
+             <Form.Item
+               name={'address'}
+               label="所在地址"
+               initialValue={currentUser.address}
+               rules={[{ required: false, message: '请选择地址' }]}
+             >
+               <Cascader
+                 options={addressOptions} // 这是您提供的级联数据，后面会解释如何准备这个数据
+                 placeholder="请选择地址"
+               />
+             </Form.Item>
 
-      <Form.Item name={'phone'} label="电话" initialValue={currentUser.phone}>
-        <Input />
-      </Form.Item>
-      <Form.Item name={'birth'} label={'出生日期'}>
-        <DatePicker showTime />
-      </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Button type="primary" htmlType="submit">
-          保存
-        </Button>
-      </Form.Item>
-    </Form>
+             <Form.Item name={'phone'} label="电话" initialValue={currentUser.phone}>
+               <Input />
+             </Form.Item>
+             <Form.Item name={'birth'} label={'出生日期'}>
+               <DatePicker showTime />
+             </Form.Item>
+             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+               <Button type="primary" htmlType="submit">
+                 保存
+               </Button>
+             </Form.Item>
+           </Form>
+         </Card>
+       </Col>
+     </Row>
   );
 };
 

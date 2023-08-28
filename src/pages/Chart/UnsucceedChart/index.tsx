@@ -128,11 +128,18 @@ const UnsucceedChart: React.FC = () => {
       title: '执行信息',
       dataIndex: 'execMessage',
       key: 'execMessage',
+      render: (execMessage) => {
+        if(!execMessage){
+          execMessage='暂无执行信息'
+        }
+        return <p>{execMessage}</p>
+      },
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (createTime) => <p>{new Date(createTime).toLocaleString()}</p>,
     },
     {
       title: '操作',
