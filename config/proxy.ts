@@ -38,9 +38,12 @@ export default {
   },
   pre: {
     '/api/': {
-      target: 'your pre url',
+      // 要代理的地址
+      target: 'http://8.130.79.173:6848/', // 8000:api/*** => 6848:/api/***
+      // 注意不要有https , 否则代理失败
+      // 配置了这个可以从 http 代理到 https
+      // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
-      pathRewrite: { '^': '' },
     },
   },
 };
