@@ -7,7 +7,7 @@ import { Button, Card, Form, Input, message, Select, Space, Upload } from 'antd'
 import { useForm } from 'antd/es/form/Form';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react';
-import {getChartByAiAsyncMqUsingPOST} from "@/services/bi/chartController";
+import {genChartByAiUsingPOST} from "@/services/bi/chartController";
 
 const AddChartAsync: React.FC = () => {
   const [form] = useForm();
@@ -30,7 +30,7 @@ const AddChartAsync: React.FC = () => {
     };
     try {
       // const res = await getChartByAiAsyncUsingPOST(params, {}, values.file.file.originFileObj);
-      const res = await getChartByAiAsyncMqUsingPOST(params, {}, values.file.file.originFileObj);
+      const res = await genChartByAiUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {

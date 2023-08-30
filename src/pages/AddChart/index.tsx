@@ -1,4 +1,4 @@
-import { getChartByAiSyncUsingPOST } from '@/services/bi/chartController';
+import {genChartByAiUsingPOST} from '@/services/bi/chartController';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button,Card,Col,Divider,Form,Input,message,Row,Select,Space,Spin,Upload } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
@@ -32,11 +32,15 @@ const AddChart: React.FC = () => {
       file: undefined,
     };
     try {
-      const res = await getChartByAiSyncUsingPOST(params, {}, values.file.file.originFileObj);
+      const res = await genChartByAiUsingPOST(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {
         message.success('分析成功');
+        if(!res.data.genChart){
+          message.success('后台服务正为您努力生成图表中,请耐心等待');
+          return ;
+        }
         const chartOption = JSON.parse(res.data.genChart ?? '');
         if (!chartOption) {
           message.error('图表代码解析错误');

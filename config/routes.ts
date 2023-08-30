@@ -45,8 +45,8 @@ export default [
   },
   {
     path: '/add_chart',
-    name: '添加图表',
-    icon: 'build',
+    name: '智能分析',
+    icon: 'barChart',
     component: './AddChart',
   },
   {
@@ -67,12 +67,12 @@ export default [
     icon: 'pieChart',
     component: './Chart/AllChart',
   },
-  {
-    path: '/add_chart_async',
-    name: '智能分析（异步）',
-    icon: 'barChart',
-    component: './AddChartAsync',
-  },
+  // {
+  //   path: '/add_chart_async',
+  //   name: '智能分析（异步）',
+  //   icon: 'barChart',
+  //   component: './AddChartAsync',
+  // },
   {
     path: '/',
     redirect: '/my_chart',

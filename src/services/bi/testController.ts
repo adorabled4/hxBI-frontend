@@ -88,3 +88,33 @@ export async function testInsertMongoSingleUsingGET(
     ...(options || {}),
   });
 }
+
+/** send GET /api/test/msg/push */
+export async function sendUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.sendUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseString_>('/api/test/msg/push', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** sendMessage GET /api/test/msg/send */
+export async function sendMessageUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.sendMessageUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseString_>('/api/test/msg/send', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}

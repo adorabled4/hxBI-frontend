@@ -166,13 +166,7 @@ declare namespace API {
     id: number;
   };
 
-  type getChartByAiAsyncMqUsingPOSTParams = {
-    chartType?: string;
-    goal?: string;
-    name?: string;
-  };
-
-  type getChartByAiSyncUsingPOSTParams = {
+  type genChartByAiUsingPOSTParams = {
     chartType?: string;
     goal?: string;
     name?: string;
@@ -256,6 +250,11 @@ declare namespace API {
   type regenerateChartUsingGETParams = {
     /** chartId */
     chartId: number;
+  };
+
+  type sendMessageUsingGETParams = {
+    /** id */
+    id: number;
   };
 
   type sendUsingGETParams = {
