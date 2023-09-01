@@ -14,6 +14,11 @@ export default defineConfig({
    */
   hash: true,
 
+  // 生成所有路由对应的html页面
+  exportStatic: {
+    htmlSuffix: true,
+  },
+
   /**
    * @name 兼容性设置
    * @description 设置 ie11 不一定完美兼容，需要检查自己使用的所有依赖

@@ -1,0 +1,16 @@
+#FROM node:18.16.1-alpine
+#
+##WORKDIR /app
+#
+#COPY dist/package.json yarn.lock ./
+#
+#RUN yarn install --production && yarn cache clean --force
+#
+#COPY dist/ ./dist/
+#
+#EXPOSE 8000
+#
+#CMD ["yarn", "start"]
+FROM nginx:latest
+
+COPY ./dist /usr/share/nginx/html
