@@ -52,7 +52,7 @@ export default [
   {
     path: '/my_chart',
     name: '我的图表',
-    icon: 'pieChart',
+    icon: 'radarChart',
     component: './MyChart',
   },
   {
@@ -64,7 +64,7 @@ export default [
   {
     path: '/all_chart',
     name: '查看所有',
-    icon: 'pieChart',
+    icon: 'areaChart',
     component: './Chart/AllChart',
   },
   // {

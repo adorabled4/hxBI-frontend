@@ -1,9 +1,22 @@
-import {genChartByAiUsingPOST} from '@/services/bi/chartController';
+import { genChartByAiUsingPOST } from '@/services/bi/chartController';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button,Card,Col,Divider,Form,Input,message,Row,Select,Space,Spin,Upload } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  message,
+  Row,
+  Select,
+  Space,
+  Spin,
+  Upload,
+} from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import ReactECharts from 'echarts-for-react';
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 
 /**
  * 添加图表页面
@@ -37,9 +50,9 @@ const AddChart: React.FC = () => {
         message.error('分析失败');
       } else {
         message.success('分析成功');
-        if(!res.data.genChart){
+        if (!res.data.genChart) {
           message.success('后台服务正为您努力生成图表中,请耐心等待');
-          return ;
+          return;
         }
         const chartOption = JSON.parse(res.data.genChart ?? '');
         if (!chartOption) {
@@ -71,14 +84,22 @@ const AddChart: React.FC = () => {
               <Form.Item
                 name="goal"
                 label="分析目标"
-                rules={[{ required: true, message: '请输入分析目标' }]}
+                rules={[{ required: true, message: '请输入分析目标!' }]}
               >
                 <TextArea placeholder="请输入你的分析需求，比如：分析网站用户的增长情况" />
               </Form.Item>
-              <Form.Item name="name" label="图表名称">
+              <Form.Item
+                name="name"
+                label="图表名称"
+                rules={[{ required: true, message: '请输入图表名称!' }]}
+              >
                 <Input placeholder="请输入图表名称" />
               </Form.Item>
-              <Form.Item name="chartType" label="图表类型">
+              <Form.Item
+                name="chartType"
+                label="图表类型"
+                rules={[{ required: true, message: '请选择图表类型!' }]}
+              >
                 <Select
                   options={[
                     { value: '折线图', label: '折线图' },

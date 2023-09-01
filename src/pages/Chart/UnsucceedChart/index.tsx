@@ -7,6 +7,7 @@ import { message, Space, Table, Tag } from 'antd';
 import Search from 'antd/es/input/Search';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
+import DataTable from "@/pages/Chart/DataTable";
 
 interface ChartType {
   id?: number;
@@ -174,9 +175,24 @@ const UnsucceedChart: React.FC = () => {
         columns={ChartColumns}
         dataSource={chartList}
         expandable={{
-          expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.chartData}</p>,
-          rowExpandable: (record) => record.name !== 'Not Expandable',
+          expandedRowRender: (record) => {
+            // 通过 , 来确定前几行需要排除 : 数据行与标题包含的 , 数量不相同
+            const lines = record.chartData.split("\n")
+            while(lines[0].split(",").length<lines[1].split(",").length){
+              lines.shift()
+            }
+            // 拼接字符串
+            const tableData = lines.join("\n")
+            return (
+              <>
+                {/*<p style={{ margin: 30 }}>{record.chartData}</p>*/}
+                <DataTable tableData={tableData} />
+              </>
+            );
+          },
+          // rowExpandable: (record) => record.name !== 'Not Expandable',
         }}
+
         pagination={{
           onChange: (page, pageSize) => {
             setSearchParams({
