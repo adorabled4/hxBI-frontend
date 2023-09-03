@@ -1,9 +1,16 @@
 import { updateUserInfoUsingPOST } from '@/services/bi/userController';
 import { AntDesignOutlined, UploadOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import {Avatar, Button, Card, Col, Form, Input, InputNumber, message, Row, Upload} from 'antd';
+import {Avatar, Button, Card, Col, Form, Input, message, Row, Upload} from 'antd';
 import { Cascader, DatePicker, Select } from 'antd/lib';
 import React from 'react';
+import moment from 'moment';
+import 'moment/locale/zh-cn'; // 导入需要的本地化语言包，这里使用中文简体作为示例
+
+// 配置日期本地化
+moment.locale('zh-cn'); // 设置为中文简体
+
+// 在需要的地方使用 DatePicker 组件
 
 const layout = {
   labelCol: { span: 8 },
@@ -120,13 +127,17 @@ const UpdateUser: React.FC = () => {
     }
     // 格式化日期
     const formattedBirth = new Date(values.birth).toDateString();
-    const params = {
+    // 构建参数对象，根据用户是否上传了头像来决定是否包含 file 参数
+    const params: any = {
       ...values,
       birth: formattedBirth, // 使用格式化后的日期
-      file: undefined,
     };
-    console.log(values);
-    const res = await updateUserInfoUsingPOST(params, {}, values.file.file.originFileObj);
+
+    if (values.file) {
+      params.file = values.file.file.originFileObj;
+    }
+    console.log(params);
+    const res = await updateUserInfoUsingPOST(params, {}, params.file);
     if (res.code === 200) {
       message.success('更新成功!');
     }
@@ -167,14 +178,14 @@ const UpdateUser: React.FC = () => {
              >
                <Input />
              </Form.Item>
-             <Form.Item
-               name={'age'}
-               label="年龄"
-               rules={[{ type: 'number', min: 0, max: 99 }]}
-               initialValue={currentUser.age}
-             >
-               <InputNumber />
-             </Form.Item>
+             {/*<Form.Item*/}
+             {/*  name={'age'}*/}
+             {/*  label="年龄"*/}
+             {/*  rules={[{ type: 'number', min: 0, max: 99 }]}*/}
+             {/*  initialValue={currentUser.age}*/}
+             {/*>*/}
+             {/*  <InputNumber />*/}
+             {/*</Form.Item>*/}
              <Form.Item name={'gender'} label="性别" initialValue={currentUser.gender}>
                <Select>
                  <Select.Option value={1}>男</Select.Option>
@@ -182,9 +193,6 @@ const UpdateUser: React.FC = () => {
                </Select>
              </Form.Item>
 
-             {/*<Form.Item name={['user', 'address']} label="所在地址" initialValue={currentUser.address}>*/}
-             {/*  <Input />*/}
-             {/*</Form.Item>*/}
              <Form.Item
                name={'address'}
                label="所在地址"
@@ -200,7 +208,7 @@ const UpdateUser: React.FC = () => {
              <Form.Item name={'phone'} label="电话" initialValue={currentUser.phone}>
                <Input />
              </Form.Item>
-             <Form.Item name={'birth'} label={'出生日期'}>
+             <Form.Item name={'birth'} label={'出生日期'} initialValue={moment()} >
                <DatePicker showTime />
              </Form.Item>
              <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

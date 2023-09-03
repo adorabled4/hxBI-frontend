@@ -52,6 +52,7 @@ const AddChart: React.FC = () => {
         message.success('分析成功');
         if (!res.data.genChart) {
           message.success('后台服务正为您努力生成图表中,请耐心等待');
+          setSubmitting(false);
           return;
         }
         const chartOption = JSON.parse(res.data.genChart ?? '');
