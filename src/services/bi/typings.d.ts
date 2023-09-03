@@ -34,6 +34,13 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseListChartLogEntity_ = {
+    code?: number;
+    data?: ChartLogEntity[];
+    description?: string;
+    message?: string;
+  };
+
   type BaseResponseListUserVO_ = {
     code?: number;
     data?: UserVO[];
@@ -123,6 +130,14 @@ declare namespace API {
     status?: string;
   };
 
+  type ChartLogEntity = {
+    chartId?: number;
+    createTime?: string;
+    logId?: number;
+    result?: string;
+    userId?: number;
+  };
+
   type ChartQueryRequest = {
     chartType?: string;
     current?: number;
@@ -142,8 +157,6 @@ declare namespace API {
     chartType?: string;
     createTime?: string;
     execMessage?: string;
-    genChart?: string;
-    genResult?: string;
     goal?: string;
     id?: number;
     isDelete?: number;
@@ -175,6 +188,11 @@ declare namespace API {
   type getChartEntityByIdUsingGETParams = {
     /** id */
     id?: number;
+  };
+
+  type getLastDayLogUsingGETParams = {
+    /** count */
+    count: number;
   };
 
   type getUserByIdUsingGETParams = {

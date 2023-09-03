@@ -84,7 +84,7 @@ export async function loginUsingPOST(
   });
 }
 
-/** 用户登录-email POST /api/user/login/email/quick */
+/** 验证码快速登录-email POST /api/user/login/email/quick */
 export async function quickLoginUsingPOST(
   body: API.QuickLoginEmailRequest,
   options?: { [key: string]: any },

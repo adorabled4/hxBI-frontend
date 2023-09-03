@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** addChartEntity POST /api/chart/add */
+/** 添加图表实体 POST /api/chart/add */
 export async function addChartEntityUsingPOST(
   body: API.ChartAddRequest,
   options?: { [key: string]: any },
@@ -17,7 +17,7 @@ export async function addChartEntityUsingPOST(
   });
 }
 
-/** deleteChartEntity POST /api/chart/delete */
+/** 通过id删除图表 POST /api/chart/delete */
 export async function deleteChartEntityUsingPOST(
   body: API.DeleteRequest,
   options?: { [key: string]: any },
@@ -32,7 +32,7 @@ export async function deleteChartEntityUsingPOST(
   });
 }
 
-/** editChartEntity POST /api/chart/edit */
+/** 编辑图表实体类 POST /api/chart/edit */
 export async function editChartEntityUsingPOST(
   body: API.ChartEditRequest,
   options?: { [key: string]: any },
@@ -47,7 +47,7 @@ export async function editChartEntityUsingPOST(
   });
 }
 
-/** genChartByAi POST /api/chart/gen/async/mq */
+/** 通过ai生成图表 POST /api/chart/gen/async/mq */
 export async function genChartByAiUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.genChartByAiUsingPOSTParams,
@@ -83,7 +83,7 @@ export async function genChartByAiUsingPOST(
   });
 }
 
-/** getChartEntityById GET /api/chart/get */
+/** 通过chartId获取图表 GET /api/chart/get */
 export async function getChartEntityByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getChartEntityByIdUsingGETParams,
@@ -98,7 +98,7 @@ export async function getChartEntityByIdUsingGET(
   });
 }
 
-/** getAllCharts POST /api/chart/list/chart/all */
+/** 获取所有图表 POST /api/chart/list/chart/all */
 export async function getAllChartsUsingPOST(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
@@ -113,7 +113,7 @@ export async function getAllChartsUsingPOST(
   });
 }
 
-/** getUnsucceedChart POST /api/chart/list/chart/unsucceed */
+/** 获取生成失败图表 POST /api/chart/list/chart/unsucceed */
 export async function getUnsucceedChartUsingPOST(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
@@ -128,7 +128,7 @@ export async function getUnsucceedChartUsingPOST(
   });
 }
 
-/** listChartEntityByPage POST /api/chart/list/page */
+/** 获取图表列表 POST /api/chart/list/page */
 export async function listChartEntityByPageUsingPOST(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
@@ -143,7 +143,7 @@ export async function listChartEntityByPageUsingPOST(
   });
 }
 
-/** listMyChartEntityByPage POST /api/chart/my/list/page */
+/** 获取当前用户图表列表 POST /api/chart/my/list/page */
 export async function listMyChartEntityByPageUsingPOST(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
@@ -158,7 +158,7 @@ export async function listMyChartEntityByPageUsingPOST(
   });
 }
 
-/** regenerateChart GET /api/chart/regen/chart */
+/** 重新生成图表 GET /api/chart/regen/chart */
 export async function regenerateChartUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.regenerateChartUsingGETParams,
@@ -173,7 +173,7 @@ export async function regenerateChartUsingGET(
   });
 }
 
-/** updateChartEntity POST /api/chart/update */
+/** 更新图表实体内容 POST /api/chart/update */
 export async function updateChartEntityUsingPOST(
   body: API.ChartUpdateRequest,
   options?: { [key: string]: any },
