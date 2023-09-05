@@ -53,42 +53,14 @@ const LogChart = () => {
     legend: {
       position: 'top',
     },
-    smooth: true,
+    smooth: false,
     animation: {
       appear: {
         animation: 'path-in',
         duration: 5000,
       },
     },
-    color: ['#1979C9', '#D62A0D', '#FAA219'],
-    annotations: [
-      // 低于中位数颜色变化
-      {
-        type: 'regionFilter',
-        start: ['min', 'median'],
-        end: ['max', '0'],
-        color: '#F4664A',
-      },
-      {
-        type: 'text',
-        position: ['min', 'median'],
-        content: '中位数',
-        offsetY: -4,
-        style: {
-          textBaseline: 'bottom',
-        },
-      },
-      {
-        type: 'line',
-        start: ['min', 'median'],
-        end: ['max', 'median'],
-        style: {
-          stroke: '#F4664A',
-          lineDash: [2, 2],
-        },
-      },
-    ],
-    stepType: 'vh',
+    color: ['#1ffaba', '#D611AA'],
     padding: 'auto',
   };
 
