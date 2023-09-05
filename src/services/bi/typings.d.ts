@@ -97,7 +97,7 @@ declare namespace API {
   };
 
   type Chart = {
-    chartId?: number;
+    chartId?: string;
     chartType?: string;
     createTime?: string;
     execMessage?: string;
