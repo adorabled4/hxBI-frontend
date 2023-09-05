@@ -5,7 +5,7 @@ import {
 
 import { useModel } from '@@/exports';
 
-import {Card, Col, message, Result, Row, Tag} from 'antd';
+import { Card, Col, message, Result, Row, Tag } from 'antd';
 import Search from 'antd/es/input/Search';
 import { Avatar } from 'antd/lib';
 import List from 'antd/lib/list';
@@ -119,24 +119,27 @@ const MyChartPage: React.FC = () => {
               <List.Item.Meta
                 avatar={<Avatar src={currentUser && currentUser.avatarUrl} />}
                 title={
-                <>
-                  <Row>
-                    <Col lg={8} md={14}>
-                      {item.name}
-                    </Col>
-                    <Col>
-                      <Tag color={"red"} >版本: {item.version}</Tag>
-                    </Col>
-                  </Row>
-                </>
+                  <>
+                    <Row>
+                      <Col lg={8} md={14}>
+                        {item.name}
+                      </Col>
+                      <Col>
+                        <Tag color={'red'}>版本: {item.version}</Tag>
+                      </Col>
+                      <Col lg={8}>{'生成时间：' + new Date(item.createTime).toLocaleString()}</Col>
+                      <Col>
+                        <a onClick={() => handleDeleteChart(item.chartId)}>删除</a>
+                      </Col>
+                    </Row>
+                  </>
                 }
                 description={
-                <>
-                  <a>{item.chartType ? '图表类型：' + item.chartType : undefined}</a>
-                </>
+                  <>
+                    <a>{item.chartType ? '图表类型：' + item.chartType : undefined}</a>
+                  </>
                 }
               />
-              <a onClick={() => handleDeleteChart(item.chartId)}>删除</a>
               <>
                 {item.status === 'wait' && (
                   <>
@@ -156,7 +159,7 @@ const MyChartPage: React.FC = () => {
                   <>
                     <div style={{ marginBottom: 16 }} />
                     <p>{'分析目标：' + item.goal}</p>
-                    <p>{'生成时间：' + new Date(item.createTime).toLocaleString()}</p>
+                    <p>{'分析结论：' + item.genResult}</p>
                     <div style={{ marginBottom: 16 }} />
                     <ReactECharts option={item.genChart && JSON.parse(item.genChart)} />
                   </>
