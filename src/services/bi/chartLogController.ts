@@ -8,7 +8,7 @@ export async function getLastDayLogUsingGET(
   params: API.getLastDayLogUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseListChartLogEntity_>('/api/chart/log', {
+  return request<API.BaseResponseListChartLogDTO_>('/api/chart/log', {
     method: 'GET',
     params: {
       ...params,

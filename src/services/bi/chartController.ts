@@ -17,12 +17,27 @@ export async function addChartEntityUsingPOST(
   });
 }
 
-/** 通过id删除图表 POST /api/chart/delete */
+/** 通过id删除图表 POST /api/chart/delete/do */
 export async function deleteChartEntityUsingPOST(
   body: API.DeleteRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseBoolean_>('/api/chart/delete', {
+  return request<API.BaseResponseBoolean_>('/api/chart/delete/do', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 通过id删除图表 POST /api/chart/delete/doc */
+export async function deleteChartDocumentUsingPOST(
+  body: API.DeleteChartDocRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseBoolean_>('/api/chart/delete/doc', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 import {
-  deleteChartEntityUsingPOST,
+  deleteChartDocumentUsingPOST,
   listMyChartEntityByPageUsingPOST,
 } from '@/services/bi/chartController';
 
@@ -63,11 +63,17 @@ const MyChartPage: React.FC = () => {
 
   useEffect(() => {}, []);
 
-  const handleDeleteChart = async (chartId: number) => {
+  const handleDeleteChart = async (chartId: number,version:number) => {
     const param = {
       id: chartId,
+      version:version
     };
-    deleteChartEntityUsingPOST(param);
+    const result =  deleteChartDocumentUsingPOST(param);
+    if(result.data === false){
+      message.error("删除失败")
+    }else{
+      message.error("删除成功!")
+    }
     // 删除完成后调用setRefreshData来刷新页面数据
     loadData();
   };
@@ -129,7 +135,7 @@ const MyChartPage: React.FC = () => {
                       </Col>
                       <Col lg={8}>{'生成时间：' + new Date(item.createTime).toLocaleString()}</Col>
                       <Col>
-                        <a onClick={() => handleDeleteChart(item.chartId)}>删除</a>
+                        <a onClick={() => handleDeleteChart(item.chartId,item.version)}>删除</a>
                       </Col>
                     </Row>
                   </>
