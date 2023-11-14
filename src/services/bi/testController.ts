@@ -67,6 +67,14 @@ export async function testListChartEntityByPageUsingPOST(
   });
 }
 
+/** genLog GET /api/test/log/gen */
+export async function genLogUsingGET(options?: { [key: string]: any }) {
+  return request<boolean>('/api/test/log/gen', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** testInsertMongo GET /api/test/mongo */
 export async function testInsertMongoUsingGET(options?: { [key: string]: any }) {
   return request<API.BaseResponseListBoolean_>('/api/test/mongo', {

@@ -210,6 +210,20 @@ declare namespace API {
     pageSize?: number;
   };
 
+  type loginByGiteeUsingGETParams = {
+    /** code */
+    code?: string;
+    /** state */
+    state?: string;
+  };
+
+  type loginByGithubUsingGETParams = {
+    /** code */
+    code?: string;
+    /** state */
+    state?: string;
+  };
+
   type LoginEmailRequest = {
     email?: string;
     password?: string;

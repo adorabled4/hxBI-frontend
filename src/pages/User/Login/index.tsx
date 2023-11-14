@@ -5,12 +5,10 @@ import {
   sendVerifyCodeUsingGET,
 } from '@/services/bi/userController';
 import {
-  AlipayCircleOutlined,
+  GithubFilled,
   LockOutlined,
   MobileOutlined,
-  TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
 } from '@ant-design/icons';
 import {
   LoginForm,
@@ -20,11 +18,12 @@ import {
 } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, Helmet, history, SelectLang, useIntl, useModel } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
+import {Alert, message, Tabs} from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
+import OauthGitee from "@/components/Oauth/OauthGitee";
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -43,9 +42,11 @@ const ActionIcons = () => {
 
   return (
     <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />
+      {/*<AlipayCircleOutlined key="AlipayCircleOutlined" className={langClassName} />*/}
+      {/*<TaobaoCircleOutlined key="TaobaoCircleOutlined" className={langClassName} />*/}
+      {/*<WeiboCircleOutlined key="WeiboCircleOutlined" className={langClassName} />*/}
+      {/*<GithubFilled key="GithuboCircleOutlined" className={langClassName} />*/}
+      <GithubFilled key="GiteeCircleOutLined" onClick={OauthGitee.getCode} className={langClassName} />
     </>
   );
 };
@@ -87,9 +88,38 @@ const LoginMessage: React.FC<{
   );
 };
 
-const Login: React.FC = () => {
+const Login: React.FC =  () => {
+  const urlParams = new URLSearchParams(window.location.search);
+
+
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const {initialState, setInitialState} = useModel('@@initialState');
+  const fetchUserInfo = async () => {
+    const userInfo = await initialState?.fetchUserInfo?.();
+    if (userInfo) {
+      flushSync(() => {
+        setInitialState((s) => ({
+          ...s,
+          currentUser: userInfo,
+        }));
+      });
+    }
+  };
+
+  const checkLogin3rd = async ()=>{
+    const code = urlParams.get('code');
+    if (code) {
+      await OauthGitee.getToken(code)
+      const tmpToken = localStorage.getItem("accessToken")
+      if (tmpToken) {
+        // 需要存储当前用户的信息 ,否则在进入主页之后会跳转回来,,,,
+        await fetchUserInfo();
+        history.push(urlParams.get('redirect') || '/my_chart');
+      }
+    }
+  }
+
+  checkLogin3rd()
 
   const containerClassName = useEmotionCss(() => {
     return {
@@ -107,17 +137,7 @@ const Login: React.FC = () => {
 
   const intl = useIntl();
 
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-    if (userInfo) {
-      flushSync(() => {
-        setInitialState((s) => ({
-          ...s,
-          currentUser: userInfo,
-        }));
-      });
-    }
-  };
+
 
   const [form] = useForm();
 
@@ -158,15 +178,16 @@ const Login: React.FC = () => {
         return;
       }
       console.log(msg);
-    } catch (error) {}
+    } catch (error) {
+    }
   };
 
   const logo = (
-    <div style={{ display: 'flex', alignItems: 'left' }}>
+    <div style={{display: 'flex', alignItems: 'left'}}>
       <img
         src="/logo.svg"
         alt="logo"
-        style={{ width: '120px', height: '60px', marginRight: '20px' }}
+        style={{width: '120px', height: '60px', marginRight: '20px'}}
       />
     </div>
   );
@@ -182,7 +203,7 @@ const Login: React.FC = () => {
       }}
     >
       登录
-      <br />
+      <br/>
     </span>
   );
   const subTitle = (
@@ -212,7 +233,7 @@ const Login: React.FC = () => {
           - {Settings.title}
         </title>
       </Helmet>
-      <Lang />
+      <Lang/>
       <div
         style={{
           flex: '1',
@@ -221,7 +242,7 @@ const Login: React.FC = () => {
       >
         <LoginForm
           form={form}
-          style={{ margin: -14 }}
+          style={{margin: -14}}
           contentStyle={{
             minWidth: 280,
             maxWidth: '75vw',
@@ -238,7 +259,7 @@ const Login: React.FC = () => {
               id="pages.login.loginWith"
               defaultMessage="其他登录方式"
             />,
-            <ActionIcons key="icons" />,
+            <ActionIcons key="icons"/>,
           ]}
           onFinish={async (values) => {
             // await handleSubmit(values as API.LoginEmailRequest);
@@ -282,7 +303,7 @@ const Login: React.FC = () => {
                 name="email"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined />,
+                  prefix: <UserOutlined/>,
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.username.placeholder',
@@ -304,7 +325,7 @@ const Login: React.FC = () => {
                 name="password"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined />,
+                  prefix: <LockOutlined/>,
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.password.placeholder',
@@ -325,13 +346,13 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误"/>}
           {type === 'mobile' && (
             <>
               <ProFormText
                 fieldProps={{
                   size: 'large',
-                  prefix: <MobileOutlined />,
+                  prefix: <MobileOutlined/>,
                 }}
                 name="email"
                 placeholder={intl.formatMessage({
@@ -363,7 +384,7 @@ const Login: React.FC = () => {
               <ProFormCaptcha
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined />,
+                  prefix: <LockOutlined/>,
                 }}
                 captchaProps={{
                   size: 'large',
@@ -406,19 +427,19 @@ const Login: React.FC = () => {
             }}
           >
             <ProFormCheckbox noStyle name="autoLogin">
-              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
+              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录"/>
             </ProFormCheckbox>
             <a
               style={{
                 float: 'right',
               }}
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码"/>
             </a>
           </div>
         </LoginForm>
       </div>
-      <Footer backgroundColor={'rgba(0, 0, 0, 0)'} />
+      <Footer backgroundColor={'rgba(0, 0, 0, 0)'}/>
     </div>
   );
 };
